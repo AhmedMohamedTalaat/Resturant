@@ -6,9 +6,14 @@ from django.core.validators import MinLengthValidator
 
 class User(AbstractUser):
     roles_choices = (('admin', 1), ('employee', 2))
+    username = None
     name = models.CharField(max_length=50, null=False, unique=True)
     employee_number = models.CharField(
         max_length=4, unique=True, validators=[MinLengthValidator(4)], null=False)
     role = models.CharField(
         max_length=20, choices=roles_choices, default='employee')
     USERNAME_FIELD = 'name'
+
+
+    class Meta:
+        db_table = 'User'
